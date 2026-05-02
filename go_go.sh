@@ -10,7 +10,7 @@ echo "deb [signed-by=/usr/share/keyrings/yarn.gpg] https://dl.yarnpkg.com/debian
 
 apt-get update -y
 apt-get install -y tor torsocks python3-pip xvfb software-properties-common
-add-apt-repository ppa:deadsnakes/ppa -y
+DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:deadsnakes/ppa -y
 apt-get update -y
 apt-get install -y python3.10 python3.10-distutils python3.10-venv
 curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
