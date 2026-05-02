@@ -9,11 +9,16 @@ echo "deb [signed-by=/usr/share/keyrings/yarn.gpg] https://dl.yarnpkg.com/debian
   | sudo tee /etc/apt/sources.list.d/yarn.list
 
 apt-get update -y
-apt-get install -y tor torsocks python3-pip xvfb software-properties-common
-DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:deadsnakes/ppa -y
-apt-get update -y
-apt-get install -y python3.10 python3.10-distutils python3.10-venv
-curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
+apt-get install -y tor torsocks python3-pip xvfb software-properties-common curl
+
+# Install Python 3.10 on Ubuntu 18.04 without PPA (avoids hanging)
+if ! command -v python3.10 &>/dev/null; then
+    curl -fsSL https://github.com/indygreg/python-build-standalone/releases/download/20230507/cpython-3.10.11+20230507-x86_64-unknown-linux-gnu-install_only.tar.gz \
+        | tar -xz -C /usr/local --strip-components=1
+fi
+
+python3.10 -m ensurepip --upgrade
+python3.10 -m pip install --upgrade pip
 python3.10 -m pip install -r requirements.txt
 python3.10 -m playwright install firefox || true
 python3.10 -m playwright install-deps
