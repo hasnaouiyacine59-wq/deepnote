@@ -9,10 +9,14 @@ echo "deb [signed-by=/usr/share/keyrings/yarn.gpg] https://dl.yarnpkg.com/debian
   | sudo tee /etc/apt/sources.list.d/yarn.list
 
 apt-get update -y
-apt-get install -y tor torsocks python3-pip xvfb
-pip3 install -r requirements.txt
-playwright install chrome || true
-playwright install-deps
+apt-get install -y tor torsocks python3-pip xvfb software-properties-common
+add-apt-repository ppa:deadsnakes/ppa -y
+apt-get update -y
+apt-get install -y python3.10 python3.10-distutils python3.10-venv
+curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
+python3.10 -m pip install -r requirements.txt
+python3.10 -m playwright install firefox || true
+python3.10 -m playwright install-deps
 mkdir -p content/
 
 setsid tor -f torrc1 >content/tor1.log 2>&1 &
@@ -36,7 +40,7 @@ echo "Tor ready, starting sessions..."
 run_loop() {
     local socks=$1 ctrl=$2
     while true; do
-        nice -n 10 python3 cum.py --socks-port "$socks" --control-port "$ctrl"
+        nice -n 10 python3.10 cum.py --socks-port "$socks" --control-port "$ctrl"
         sleep 2
     done
 }
