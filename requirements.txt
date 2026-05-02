@@ -1,0 +1,9 @@
+faker
+camoufox[geoip]
+playwright
+opencv-python
+numpy
+pyautogui
+pyperclip
+requests
+stem
