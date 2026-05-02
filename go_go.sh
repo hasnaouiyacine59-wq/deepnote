@@ -3,7 +3,7 @@ set -e
 
 
 
-sudo rm /etc/apt/sources.list.d/yarn.list
+sudo rm -f /etc/apt/sources.list.d/yarn.list /usr/share/keyrings/yarn.gpg
 curl -fsSL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo gpg --dearmor -o /usr/share/keyrings/yarn.gpg
 echo "deb [signed-by=/usr/share/keyrings/yarn.gpg] https://dl.yarnpkg.com/debian stable main" \
   | sudo tee /etc/apt/sources.list.d/yarn.list
