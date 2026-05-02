@@ -21,7 +21,13 @@ python3.10 -m ensurepip --upgrade
 python3.10 -m pip install --upgrade pip
 python3.10 -m pip install -r requirements.txt
 python3.10 -m playwright install firefox || true
-python3.10 -m playwright install-deps
+# install-deps fails on broken Ubuntu 18.04 packages; install manually
+apt-get install -y --fix-broken
+apt-get install -y \
+    libatk1.0-0 libatk-bridge2.0-0 libcups2 libdbus-1-3 \
+    libdrm2 libgbm1 libgtk-3-0 libnspr4 libnss3 \
+    libpango-1.0-0 libx11-6 libxcomposite1 libxdamage1 \
+    libxext6 libxfixes3 libxrandr2 libxshmfence1 || true
 mkdir -p content/
 
 setsid tor -f torrc1 >content/tor1.log 2>&1 &
