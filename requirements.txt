@@ -1,6 +1,6 @@
 faker
 camoufox[geoip]
-playwright
+playwright==1.29.0
 pyautogui
 pyperclip
 requests
